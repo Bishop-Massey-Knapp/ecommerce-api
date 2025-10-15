@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-commerce API Dashboard</title>
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #065082 0%, #02253D 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1098F7, #065082);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            padding: 25px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            background: #f9f9f9;
+        }
+        
+        .section h2 {
+            color: #02253D;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            display: flex;
+            align-items: center;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #02253D;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #0FF7E8, #1098F7);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .btn:hover {
+            background: linear-gradient(135deg, #FACA0A, #FA820B);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(250, 130, 11, 0.4);
+        }
+        
+        .btn-small {
+            padding: 8px 15px;
+            font-size: 14px;
+            margin: 5px;
+        }
+        
+        .response {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f0f8f0;
+            border: 2px solid #4CAF50;
+            border-radius: 8px;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .error {
+            background: #fff5f5;
+            border-color: #f56565;
+            color: #c53030;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+        }
+        
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>E-commerce API Dashboard</h1>
+            <p>Interactive interface for your Flask API</p>
+        </div>
+        
+        <div class="content">
+            <div class="grid">
+                <!-- Users Section -->
+                <div class="section">
+                    <h2>Users Management</h2>
+                    
+                    <h3>Create User</h3>
+                    <div class="form-group">
+                        <label>Name:</label>
+                        <input type="text" id="userName" placeholder="Marie Antoinette">
+                    </div>
+                    <div class="form-group">
+                        <label>Email:</label>
+                        <input type="email" id="userEmail" placeholder="losthead@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Address:</label>
+                        <input type="text" id="userAddress" placeholder="78000 Versailles, City, State">
+                    </div>
+                    <button class="btn" onclick="createUser()">Create User</button>
+                    <button class="btn btn-small" onclick="getUsers()">Get All Users</button>
+                    <div id="userResponse" class="response" style="display: none;"></div>
+                </div>
+
+                <!-- Products Section -->
+                <div class="section">
+                    <h2>Products Management</h2>
+                    
+                    <h3>Create Product</h3>
+                    <div class="form-group">
+                        <label>Product Name:</label>
+                        <input type="text" id="productName" placeholder="Cake">
+                    </div>
+                    <div class="form-group">
+                        <label>Price:</label>
+                        <input type="number" step="0.01" id="productPrice" placeholder="4.99">
+                    </div>
+                    <button class="btn" onclick="createProduct()">Create Product</button>
+                    <button class="btn btn-small" onclick="getProducts()">Get All Products</button>
+                    <div id="productResponse" class="response" style="display: none;"></div>
+                </div>
+            </div>
+
+            <!-- Orders Section -->
+            <div class="section">
+                <h2>Orders Management</h2>
+                <div class="grid">
+                    <div>
+                        <h3>Create Order</h3>
+                        <div class="form-group">
+                            <label>User ID:</label>
+                            <input type="number" id="orderUserId" placeholder="1792">
+                        </div>
+                        <button class="btn" onclick="createOrder()">Create Order</button>
+                    </div>
+                    <div>
+                        <h3>Add Product to Order</h3>
+                        <div class="form-group">
+                            <label>Order ID:</label>
+                            <input type="number" id="addOrderId" placeholder="17">
+                        </div>
+                        <div class="form-group">
+                            <label>Product ID:</label>
+                            <input type="number" id="addProductId" placeholder="93">
+                        </div>
+                        <button class="btn" onclick="addProductToOrder()">Add Product</button>
+                    </div>
+                </div>
+                <button class="btn btn-small" onclick="getOrders()">Get All Orders</button>
+                <div id="orderResponse" class="response" style="display: none;"></div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:3000';
+
+        async function makeRequest(url, method = 'GET', data = null) {
+            const options = {
+                method: method,
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            };
+            
+            if (data) {
+                options.body = JSON.stringify(data);
+            }
+
+            try {
+                const response = await fetch(API_BASE + url, options);
+                const result = await response.json();
+                return { success: response.ok, data: result, status: response.status };
+            } catch (error) {
+                return { success: false, data: { error: error.message }, status: 0 };
+            }
+        }
+
+        function showResponse(elementId, response) {
+            const element = document.getElementById(elementId);
+            element.style.display = 'block';
+            element.className = response.success ? 'response' : 'response error';
+            element.textContent = JSON.stringify(response.data, null, 2);
+        }
+
+        async function createUser() {
+            const data = {
+                name: document.getElementById('userName').value,
+                email: document.getElementById('userEmail').value,
+                address: document.getElementById('userAddress').value
+            };
+            
+            if (!data.name || !data.email || !data.address) {
+                alert('Please fill all fields');
+                return;
+            }
+
+            const response = await makeRequest('/users', 'POST', data);
+            showResponse('userResponse', response);
+            
+            if (response.success) {
+                document.getElementById('userName').value = '';
+                document.getElementById('userEmail').value = '';
+                document.getElementById('userAddress').value = '';
+            }
+        }
+
+        async function getUsers() {
+            const response = await makeRequest('/users');
+            showResponse('userResponse', response);
+        }
+
+        async function createProduct() {
+            const data = {
+                product_name: document.getElementById('productName').value,
+                price: parseFloat(document.getElementById('productPrice').value)
+            };
+            
+            if (!data.product_name || !data.price) {
+                alert('Please fill all fields');
+                return;
+            }
+
+            const response = await makeRequest('/products', 'POST', data);
+            showResponse('productResponse', response);
+            
+            if (response.success) {
+                document.getElementById('productName').value = '';
+                document.getElementById('productPrice').value = '';
+            }
+        }
+
+        async function getProducts() {
+            const response = await makeRequest('/products');
+            showResponse('productResponse', response);
+        }
+
+        async function createOrder() {
+            const data = {
+                user_id: parseInt(document.getElementById('orderUserId').value)
+            };
+            
+            if (!data.user_id) {
+                alert('Please enter User ID');
+                return;
+            }
+
+            const response = await makeRequest('/orders', 'POST', data);
+            showResponse('orderResponse', response);
+            
+            if (response.success) {
+                document.getElementById('orderUserId').value = '';
+            }
+        }
+
+        async function addProductToOrder() {
+            const orderId = document.getElementById('addOrderId').value;
+            const productId = document.getElementById('addProductId').value;
+            
+            if (!orderId || !productId) {
+                alert('Please fill Order ID and Product ID');
+                return;
+            }
+
+            const response = await makeRequest(`/orders/${orderId}/add_product/${productId}`, 'PUT');
+            showResponse('orderResponse', response);
+            
+            if (response.success) {
+                document.getElementById('addOrderId').value = '';
+                document.getElementById('addProductId').value = '';
+            }
+        }
+
+        async function getOrders() {
+            const response = await makeRequest('/orders');
+            showResponse('orderResponse', response);
+        }
+    </script>
+</body>
+</html>

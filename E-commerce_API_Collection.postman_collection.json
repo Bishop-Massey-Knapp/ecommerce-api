@@ -1,0 +1,280 @@
+{
+	"info": {
+		"_postman_id": "ecommerce-api-collection",
+		"name": "E-commerce API Collection",
+		"description": "Complete collection of endpoints for the E-commerce API with User, Product, and Order management",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "GET All Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:6100/users",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "6100",
+							"path": ["users"]
+						}
+					}
+				},
+				{
+					"name": "GET User by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:6100/users/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "6100",
+							"path": ["users", "1"]
+						}
+					}
+				},
+				{
+					"name": "POST Create User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"John Doe\",\n  \"address\": \"123 Main Street, Anytown, USA\",\n  \"email\": \"john.doe@email.com\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:6100/users",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "6100",
+							"path": ["users"]
+						}
+					}
+				},
+				{
+					"name": "PUT Update User",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"John Smith\",\n  \"address\": \"456 Oak Avenue, Newtown, USA\",\n  \"email\": \"john.smith@email.com\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:6100/users/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "6100",
+							"path": ["users", "1"]
+						}
+					}
+				},
+				{
+					"name": "DELETE User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:6100/users/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "6100",
+							"path": ["users", "1"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "GET All Products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:6100/products",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "6100",
+							"path": ["products"]
+						}
+					}
+				},
+				{
+					"name": "GET Product by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:6100/products/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "6100",
+							"path": ["products", "1"]
+						}
+					}
+				},
+				{
+					"name": "POST Create Product",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"product_name\": \"iPhone 15 Pro\",\n  \"price\": 999.99\n}"
+						},
+						"url": {
+							"raw": "http://localhost:6100/products",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "6100",
+							"path": ["products"]
+						}
+					}
+				},
+				{
+					"name": "PUT Update Product",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"product_name\": \"iPhone 15 Pro Max\",\n  \"price\": 1199.99\n}"
+						},
+						"url": {
+							"raw": "http://localhost:6100/products/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "6100",
+							"path": ["products", "1"]
+						}
+					}
+				},
+				{
+					"name": "DELETE Product",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:6100/products/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "6100",
+							"path": ["products", "1"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "POST Create Order",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"user_id\": 1\n}"
+						},
+						"url": {
+							"raw": "http://localhost:6100/orders",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "6100",
+							"path": ["orders"]
+						}
+					}
+				},
+				{
+					"name": "PUT Add Product to Order",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:6100/orders/1/add_product/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "6100",
+							"path": ["orders", "1", "add_product", "1"]
+						}
+					}
+				},
+				{
+					"name": "DELETE Remove Product from Order",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:6100/orders/1/remove_product/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "6100",
+							"path": ["orders", "1", "remove_product", "1"]
+						}
+					}
+				},
+				{
+					"name": "GET Orders by User ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:6100/orders/user/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "6100",
+							"path": ["orders", "user", "1"]
+						}
+					}
+				},
+				{
+					"name": "GET Products in Order",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:6100/orders/1/products",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "6100",
+							"path": ["orders", "1", "products"]
+						}
+					}
+				}
+			]
+		}
+	]
+}
