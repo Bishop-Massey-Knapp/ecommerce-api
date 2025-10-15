@@ -1,43 +1,33 @@
 # E-Commerce API
 
-A full-stack e-commerce REST API built with Flask, SQLAlchemy, and MySQL. Features a complete web dashboard, comprehensive CRUD operations, and many-to-many relationships.
+A REST API for e-commerce applications built with Flask and MySQL. Includes complete CRUD operations, relationship management, and a web interface for testing and administration.
 
-## 🌟 Live Demo
-- **API**: [Your deployment URL here]
-- **Web Dashboard**: [Your deployment URL here]
+## Overview
 
-## 🚀 Features
+This project implements a full-featured e-commerce backend with user management, product catalog, and order processing capabilities. The API supports many-to-many relationships between orders and products, with proper data validation and error handling.
 
-- **RESTful API** with 15+ endpoints
-- **Web Dashboard** with interactive forms
-- **Database Models** with proper relationships
-- **Many-to-Many** relationships (Orders ↔ Products)
-- **Data Validation** using Marshmallow
-- **Error Handling** with appropriate HTTP responses
-- **CORS Support** for cross-origin requests
-- **Sample Data** population scripts
+## Technology Stack
 
-## 🛠️ Tech Stack
+**Backend Framework:** Flask 3.1.2  
+**Database:** MySQL with SQLAlchemy ORM  
+**Data Serialization:** Marshmallow  
+**Frontend:** HTML5, CSS3, JavaScript  
+**Testing:** Postman collection included  
 
-- **Backend**: Flask 3.1.2, SQLAlchemy, Marshmallow
-- **Database**: MySQL
-- **Frontend**: HTML5, CSS3, JavaScript
-- **Testing**: Postman Collection included
-- **Deployment**: Railway/Render ready
+## Database Schema
 
-## 📊 Database Schema
+The database consists of three main entities with proper relational constraints:
 
-### Models
-- **User**: id, name, address, email
-- **Product**: id, product_name, price  
-- **Order**: id, order_date, user_id
-- **Order_Product**: Association table for many-to-many relationships
+- **Users**: Customer information (id, name, address, email)
+- **Products**: Product catalog (id, product_name, price)  
+- **Orders**: Purchase orders (id, order_date, user_id)
+- **Order_Product**: Junction table for order-product relationships
 
-### Relationships
-- Users → Orders (One-to-Many)
-- Orders ↔ Products (Many-to-Many)
+**Relationships:**
+- Users have many Orders (1:N)
+- Orders contain many Products through Order_Product association table (M:N)
 
-## 🔗 API Endpoints
+## API Endpoints
 
 ### Users
 - `GET /users` - Get all users
@@ -61,31 +51,34 @@ A full-stack e-commerce REST API built with Flask, SQLAlchemy, and MySQL. Featur
 - `GET /orders/user/{user_id}` - Get orders by user
 - `GET /orders/{order_id}/products` - Get products in order
 
-## 🏃‍♂️ Quick Start
+## Installation and Setup
+
+### Prerequisites
+- Python 3.9+
+- MySQL 8.0+
+- Git
 
 ### Local Development
 ```bash
-# Clone repository
-git clone [your-repo-url]
-cd ecommerce_api
-
-# Install dependencies
+git clone https://github.com/Bishop-Massey-Knapp/ecommerce-api.git
+cd ecommerce-api
 pip install -r requirements.txt
 
-# Setup MySQL database
-mysql -u root -p
-CREATE DATABASE ecommerce_api;
+# Configure MySQL database
+mysql -u root -p -e "CREATE DATABASE ecommerce_api;"
 
-# Run application
+# Start the application
 python app.py
 ```
 
-### Testing
-1. Import `E-commerce_API_Collection.postman_collection.json` into Postman
-2. Visit `http://localhost:6100` for web dashboard
-3. Follow `TESTING_INSTRUCTIONS.md` for complete testing guide
+The application will start at `http://localhost:6100`
 
-## 📁 Project Structure
+### Testing
+- Import the Postman collection: `E-commerce_API_Collection.postman_collection.json`
+- Access the web dashboard at `http://localhost:6100`
+- Refer to `TESTING_INSTRUCTIONS.md` for comprehensive testing procedures
+
+## Project Structure
 ```
 ecommerce_api/
 ├── app.py                          # Main Flask application
@@ -97,41 +90,41 @@ ecommerce_api/
 └── PROJECT_DELIVERABLES.md       # Technical documentation
 ```
 
-## 🌐 Deployment
+## Deployment
 
-This application is configured for deployment on:
-- Railway (recommended)
-- Render
-- DigitalOcean App Platform
-- Google Cloud Platform
+The application includes configuration files for multiple deployment platforms:
+- Railway (railway.toml)
+- Render (Procfile)  
+- Google Cloud Platform (app.yaml)
 
-### Environment Variables
-- `DATABASE_URL` - MySQL connection string
-- `FLASK_ENV` - Set to 'production' for deployment
-- `PORT` - Application port (automatically set by most platforms)
+Required environment variables:
+- `DATABASE_URL`: MySQL connection string
+- `FLASK_ENV`: Set to 'production' for deployment
+- `PORT`: Application port (set automatically by hosting platforms)
 
-## 🧪 Sample Data
+## Sample Data
 
-The project includes comprehensive sample data:
-- 25 realistic users with proper contact information
-- 20 diverse products with market pricing
-- 25 orders with realistic timestamps
-- 51 order-product relationships
+The repository includes SQL scripts to populate the database with sample data:
+- 25 users with realistic contact information
+- 20 products with market-appropriate pricing
+- 25 orders with timestamps
+- 51 order-product relationship records
 
-## 📝 License
+## Features
 
-This project is open source and available under the MIT License.
+- Complete CRUD operations for all entities
+- Many-to-many relationship handling
+- Data validation and serialization
+- Error handling with appropriate HTTP status codes
+- CORS support for cross-origin requests
+- Responsive web interface
+- Comprehensive API documentation
 
-## 👨‍💻 About
+## License
 
-Created as a portfolio project demonstrating full-stack development skills including:
-- RESTful API design
-- Database modeling and relationships
-- Web development (HTML/CSS/JavaScript)
-- Testing and documentation
-- Production deployment
+MIT License
 
----
+## Contact
 
-**Contact**: [Your contact information]
-# ecommerce-api
+Bishop Massey-Knapp  
+[GitHub](https://github.com/Bishop-Massey-Knapp)
